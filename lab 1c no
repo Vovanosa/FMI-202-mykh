@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+struct ab{
+    float first,second;
+};
+
+float check(){
+    float r;
+    if(scanf("%f",&r)!=1){
+        printf("Неправильно введені дані, до побачення =D");
+        exit(EXIT_SUCCESS);
+    }
+    return r;
+}
+
+int checkint(){
+    int r;
+    if(scanf("%d",&r)!=1){
+        printf("Неправильно введені дані, до побачення =D");
+        exit(EXIT_SUCCESS);
+    }
+    return r;
+}
+
+
+struct ab input() {
+    struct ab result;
+    printf("Введіть а-> ");
+    result.first=check();
+    printf("Введіть b-> ");
+    result.second=check();
+    return result;
+}
+
+void output(struct ab r){
+    printf("Введені дані: -(x^2)+(%.2f)x+(%.2f)",r.first,r.second);
+}
+
+void argument(struct ab r, float y){
+    float d=r.first*r.first-(-4*(r.second-y));
+    if(d>0){
+        float x1=(-1*r.first+sqrt(d))/-2;
+        float x2=(-1*r.first-sqrt(d))/-2;
+        printf("точки Х - %f, %f",x1,x2);
+    }else if(d==0){
+        float x=(-1*r.first)/-2;
+        printf("точка X - %f",x);
+    }else printf("Для заданого значення точок X не існує");
+
+}
+
+void isIntersection(struct ab r){
+    float d=r.first*r.first-(-4*(r.second));
+    if(d<0){
+        printf("Не перетинається\n");
+    }else printf("Перетинається\n");
+}
+
+void sim(struct ab r){
+    printf("-x^2+(%.2f)x+(%.2f)",-1*r.first,r.second);
+}
+
+int main()
+{
+    struct ab num = input();
+    int menu=1;
+    
+    while (menu!=0){
+        printf("\nЩо мені зробити?\n1 - Ввести числа а,b\n2 - вивести отриману формулу\n3 - виконати 'argument'\n4 - виконати 'isIntersection'\n5 - виконати 'sim'\n0 - кінець роботи");
+        printf("\nЯку команду виконати? - ");
+        menu=checkint();
+        if(menu==1){
+            num=input();
+        }
+        if(menu==2){
+            output(num);
+        }
+        if(menu==3){
+            printf("Введіть значення у - ");
+            float y;
+            scanf("%f",&y);
+            argument(num,y);
+        }
+        if(menu==4){
+            isIntersection(num);
+        }
+        if(menu==5){
+            sim(num);
+        }
+        if(menu<0||menu>5){
+            printf("немає такої команди");
+        }
+    }
+printf("Бувайте!");
+    
+}

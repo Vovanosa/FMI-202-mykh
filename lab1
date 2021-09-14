@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+struct ab{
+    float first,second;
+};
+
+float check(){
+    float r;
+    if(scanf("%f",&r)!=1){
+        printf("Неправильно введені дані, до побачення =D");
+        exit(EXIT_SUCCESS);
+    }
+    return r;
+}
+
+int checkint(){
+    int r;
+    if(scanf("%d",&r)!=1){
+        printf("Неправильно введені дані, до побачення =D");
+        exit(EXIT_SUCCESS);
+    }
+    return r;
+}
+
+void input(struct ab *r) {
+    printf("Введіть а-> ");
+    r->first=check();
+    printf("Введіть b-> ");
+    r->second=check();
+}
+
+void output(struct ab r){
+    printf("Введені дані: -(x^2)+(%.2f)x+(%.2f)",r.first,r.second);
+}
+
+struct ab argument(struct ab r, float y){
+    float d=r.first*r.first-(-4*(r.second-y));
+    struct ab x;
+    if(d>=0){
+        x.first=(-1*r.first+sqrt(d))/-2;
+        x.second=(-1*r.first-sqrt(d))/-2;
+    }
+    if(d<0)printf("Для заданого значення точок X не існує\n");
+    return x;
+}
+
+float isIntersection(struct ab r){
+    float d=r.first*r.first-(-4*(r.second));
+    if(d<0){
+        return 0;
+    }else return 1;
+    
+}
+
+float sim(float r){
+    return -r;
+}
+
+int main()
+{
+    struct ab num,x;
+    int menu;
+    input(&num);
+    while (menu!=0){
+        printf("\nЩо мені зробити?\n1 - Ввести числа а,b\n2 - вивести отриману формулу\n3 - виконати 'argument'\n4 - виконати 'isIntersection'\n5 - виконати 'sim'\n0 - кінець роботи");
+        printf("\nЯку команду виконати? - ");
+        scanf("%d",&menu);
+        menu=checkint();
+        if(menu==1){
+            input(&num);
+        }
+        if(menu==2){
+            output(num);
+        }
+        if(menu==3){
+            printf("Введіть значення у - ");
+            float y=check();
+            x=argument(num,y);
+            printf("Відповідь: %f %f",x.first,x.second);
+        }
+        if(menu==4){
+            if(isIntersection(num)==1) printf("Перетинається\n");
+            else printf("Не перетинається\n");
+        }
+        if(menu==5){
+            num.first=sim(num.first);
+            printf("-x^2+(%.2f)x+(%.2f)",num.first,num.second);
+        }
+        if(menu<0||menu>5){
+            printf("немає такої команди");
+        }
+    }
+printf("Бувайте!");
+    
+}
